@@ -1,109 +1,65 @@
 import 'package:flutter/material.dart';
+import 'quote.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: NinjaCard(),
+    home: QuoteList(),
   ));
 }
 
-class NinjaCard extends StatefulWidget {
+class QuoteList extends StatefulWidget {
   @override
-  _NinjaCardState createState() => _NinjaCardState();
+  _QuoteListState createState() => _QuoteListState();
 }
 
-class _NinjaCardState extends State<NinjaCard> {
+class _QuoteListState extends State<QuoteList> {
 
-  int ninjaLevel = 0;
+  List<Quote> quotes = [
+    Quote(author: 'Oscar Wilde', text: 'Be yourself; everyone else is already taken'),
+    Quote(author: 'Jiajun Yan', text: 'I have nothing to declare except my genius'),
+    Quote(author: 'Tingyi Lin', text: 'The truth is rarely pure and never simple'),
+  ];
+
+  Widget quoteTemplate(quote) {
+    return Card(
+      margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              quote.text,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[600],
+              )
+            ),
+            SizedBox(height: 6),
+            Text(
+              quote.author,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[800]
+              )
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text('Ninja ID Card'),
+        title: Text('Awesome Quotes'),
         centerTitle: true,
-        backgroundColor: Colors.grey[850],
-        elevation: 0,
+        backgroundColor: Colors.redAccent,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            ninjaLevel += 1;
-          });
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.grey[800],
-      ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(30, 40, 30, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: CircleAvatar(
-                backgroundImage: AssetImage('assets/thumb.jpg'),
-                radius: 40,
-              ),
-            ),
-            Divider(
-              height: 60,
-              color: Colors.grey[800],
-            ),
-            Text(
-              'NAME',
-              style: TextStyle(
-              color: Colors.grey,
-              letterSpacing: 2,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Chun-Li',
-              style: TextStyle(
-              color: Colors.amberAccent[200],
-              letterSpacing: 2,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 30),
-            Text(
-              'CURRENT NINJA LEVEL',
-              style: TextStyle(
-              color: Colors.grey,
-              letterSpacing: 2,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              '$ninjaLevel',
-              style: TextStyle(
-              color: Colors.amberAccent[200],
-              letterSpacing: 2,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 30),
-            Row(
-              children: [
-                Icon(
-                  Icons.email,
-                  color: Colors.grey[400],
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'chun-li@thenetninja.co.uk',
-                  style: TextStyle(
-                    color: Colors.grey[400],
-                    fontSize: 18,
-                    letterSpacing: 1
-                  )
-                )
-              ]
-            )
-          ],
-        ),
+      body: Column(
+        children: quotes.map((quote) => quoteTemplate(quote)).toList(),
       ),
     );
   }
