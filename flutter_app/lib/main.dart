@@ -1,46 +1,15 @@
 import 'package:flutter/material.dart';
-import 'quote.dart';
-import 'quote_card.dart';
+import 'package:flutter_app/pages/choose_location.dart';
+import 'package:flutter_app/pages/home.dart';
+import 'package:flutter_app/pages/loading.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: QuoteList(),
+    initialRoute: '/',
+    routes: {
+      '/': (context) => Loading(),
+      '/home': (context) => Home(),
+      '/location': (context) => ChooseLocation()
+    }
   ));
 }
-
-class QuoteList extends StatefulWidget {
-  @override
-  _QuoteListState createState() => _QuoteListState();
-}
-
-class _QuoteListState extends State<QuoteList> {
-
-  List<Quote> quotes = [
-    Quote(author: 'Oscar Wilde', text: 'Be yourself; everyone else is already taken'),
-    Quote(author: 'Jiajun Yan', text: 'I have nothing to declare except my genius'),
-    Quote(author: 'Tingyi Lin', text: 'The truth is rarely pure and never simple'),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        title: Text('Awesome Quotes'),
-        centerTitle: true,
-        backgroundColor: Colors.redAccent,
-      ),
-      body: Column(
-        children: quotes.map((quote) => QuoteCard(
-          quote: quote,
-          delete: () {
-            setState(() {
-              quotes.remove(quote);
-            });
-          },
-        )).toList(),
-      ),
-    );
-  }
-}
-
